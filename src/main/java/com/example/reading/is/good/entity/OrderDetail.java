@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity(name="orderDetails")
+@Entity(name="order_details")
 @Data
 public class OrderDetail implements Serializable {
 

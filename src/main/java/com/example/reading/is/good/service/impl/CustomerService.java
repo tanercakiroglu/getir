@@ -1,7 +1,6 @@
 package com.example.reading.is.good.service.impl;
 
 import com.example.reading.is.good.converter.CustomerEntityConverter;
-import com.example.reading.is.good.model.ApiResponse;
 import com.example.reading.is.good.repository.ICustomerRepository;
 import com.example.reading.is.good.request.CustomerSignUpRequest;
 import com.example.reading.is.good.service.ICustomerService;
@@ -29,11 +28,10 @@ public class CustomerService implements ICustomerService, UserDetailsService {
 
 
     @Override
-    public ApiResponse signUp(CustomerSignUpRequest request) {
+    public void signUp(CustomerSignUpRequest request) {
       var customer = customerEntityConverter.convert(request);
       customer.setPassword(bCryptPasswordEncoder.encode(customer.getPassword()));
       customerRepository.save(customer);
-      return new ApiResponse();
     }
 
     @Override

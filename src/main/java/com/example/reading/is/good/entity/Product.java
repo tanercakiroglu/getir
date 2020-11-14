@@ -25,7 +25,7 @@ public class Product implements Serializable {
 
     private Long quantity;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
     private List<OrderDetail> orderDetails;
 
 }

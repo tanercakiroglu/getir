@@ -16,6 +16,10 @@ public class ApiResponse {
         this.status= HttpStatus.OK.value();
         this.data="success";
     }
+    public ApiResponse(Object data) {
+        this.status= HttpStatus.OK.value();
+        this.data=data;
+    }
     public ApiResponse(int status, Object data) {
         this.status = status;
         this.data = data;

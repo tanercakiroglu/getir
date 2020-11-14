@@ -16,8 +16,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import static com.example.reading.is.good.config.SecurityUtil.*;
 
-;
-
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 

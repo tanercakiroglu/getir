@@ -17,17 +17,19 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime orderTime;
+    private LocalDateTime orderDate;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="customer_id", referencedColumnName = "id")
+    @JoinColumn(name="customer_id", referencedColumnName = "username")
     private Customer customer;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "order",cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private List<OrderDetail> orderDetails;
 
-
+    public Order() {
+        this.setOrderDate(LocalDateTime.now());
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.reading.is.good.aspect.exceptionhandler;
 
 import com.example.reading.is.good.aspect.loggable.Loggable;
+import com.example.reading.is.good.exception.InsufficientQuantityException;
 import com.example.reading.is.good.model.ApiError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +46,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = EntityNotFoundException.class)
     public ResponseEntity<ApiError> entityNotFoundException(EntityNotFoundException ex) {
         LOGGER.error("EntityNotFoundException Exception", ex);
-        final ApiError errors = getApiError(HttpStatus.NOT_FOUND, RESOURCE_NOT_FOUND);
+        final ApiError errors = getApiError(HttpStatus.NOT_FOUND, ex.getMessage());
         return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
     }
 
@@ -57,6 +58,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(value = InsufficientQuantityException.class)
+    public ResponseEntity<ApiError> businessException(InsufficientQuantityException ex) {
+        LOGGER.error("InsufficientQuantityException ", ex);
+        final ApiError errors = getApiError(HttpStatus.CONFLICT, ex.getMessage());
+        return new ResponseEntity<>(errors, HttpStatus.OK);
+    }
 
     private ApiError getApiError(HttpStatus status, String errorMessage) {
         return ApiError

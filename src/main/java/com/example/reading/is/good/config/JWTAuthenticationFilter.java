@@ -57,7 +57,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             HttpServletResponse res,
                                             FilterChain chain,
                                             Authentication auth) throws IOException {
-
         final String token = JWT.create()
                 .withSubject(((Customer) auth.getPrincipal()).getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() +  EXPIRATION_TIME))
@@ -71,7 +70,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void unsuccessfulAuthentication(HttpServletRequest request,
                                               HttpServletResponse response,
                                               AuthenticationException failed) throws IOException {
-
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         prepareResponse(response,ApiError
                 .builder()

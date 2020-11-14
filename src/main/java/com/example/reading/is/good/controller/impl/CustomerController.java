@@ -22,7 +22,8 @@ public class CustomerController implements ICustomerController {
 
     @Override
     public ResponseEntity<ApiResponse> signUp(@Valid CustomerSignUpRequest request) {
-        return ResponseEntity.ok(customerService.signUp(request));
+        customerService.signUp(request);
+        return ResponseEntity.ok(new ApiResponse());
     }
 
 }
