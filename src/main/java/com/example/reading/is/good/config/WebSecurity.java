@@ -38,7 +38,12 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .disable()
                 .and()
                 .authorizeRequests()
-                .antMatchers(SIGN_UP_URL,SIGN_IN_URL, H2_URL)
+                .antMatchers(SIGN_UP_URL,SIGN_IN_URL, H2_URL, API_DOCS_URL,
+                        SWAGGER_UI_HTML,
+                        WEBJARS,
+                        V_2,
+                        SWAGGER_RESOURCES,
+                        SWAGGER_UI)
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()
