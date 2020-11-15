@@ -15,9 +15,9 @@ import com.example.reading.is.good.repository.IProductRepository;
 import com.example.reading.is.good.service.IOrderService;
 import com.sun.istack.NotNull;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,7 +38,7 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<OrderDto> getOrdersByUser(Long userId) {
         var orderList=orderRepository.findByCustomer(userId).orElseThrow(()-> new EntityNotFoundException("order not found"));
         return orderList.stream().map(orderEntityToDtoConverter::convertWithoutDetails).collect(Collectors.toList());

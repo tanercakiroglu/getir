@@ -5,9 +5,9 @@ import com.example.reading.is.good.model.OrderDetailDto;
 import com.example.reading.is.good.repository.IOrderDetailRepository;
 import com.example.reading.is.good.service.IOrderDetailService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,7 +23,7 @@ public class OrderDetailService implements IOrderDetailService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<OrderDetailDto> getOrderDetailByOrderId(Long orderId) {
         var orderDetailList = orderDetailRepository
                 .findAllByOrder(orderId).orElseThrow(() -> new EntityNotFoundException("order detail not found"));

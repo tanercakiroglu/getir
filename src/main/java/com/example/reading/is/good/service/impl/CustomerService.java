@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -29,6 +30,7 @@ public class CustomerService implements ICustomerService, UserDetailsService {
 
 
     @Override
+    @Transactional
     public void signUp(CustomerSignUpRequest request) throws UserExistException {
         if(customerRepository.findByUsername(request.getUsername()).isPresent()){
             throw new UserExistException("User already have an account","0002");
@@ -39,6 +41,7 @@ public class CustomerService implements ICustomerService, UserDetailsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         return customerRepository.findByUsername(userName).orElseThrow(() -> new UsernameNotFoundException("user not found"));
     }

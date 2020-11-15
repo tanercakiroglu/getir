@@ -27,7 +27,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
     private static final String SOMETHING_WENT_WRONG = "Something went wrong...";
-    public static final String RESOURCE_NOT_FOUND = "Resource not found";
 
 
     @ExceptionHandler(value = Throwable.class)
