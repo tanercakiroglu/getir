@@ -1,19 +1,20 @@
 DROP TABLE IF EXISTS products;
 DROP TABLE IF EXISTS customers;
 DROP TABLE IF EXISTS orders;
-DROP TABLE IF EXISTS orderDetails;
+DROP TABLE IF EXISTS order_details;
 
 
 CREATE TABLE customers
 (
-    username                   VARCHAR(250)  NOT NULL PRIMARY KEY,
-    password                   VARCHAR(4000) NOT NULL,
-    name                       VARCHAR(250)  NOT NULL,
-    surname                    VARCHAR(250)  NOT NULL,
-    is_account_non_expired     int           not null,
-    is_account_non_locked      int           not null,
-    is_credentials_non_expired int           not null,
-    is_enabled                 int           not null,
+    id                         NUMERIC(22) AUTO_INCREMENT PRIMARY KEY,
+    username                   VARCHAR(250) UNIQUE NOT NULL,
+    password                   VARCHAR(4000)       NOT NULL,
+    name                       VARCHAR(250)        NOT NULL,
+    surname                    VARCHAR(250)        NOT NULL,
+    is_account_non_expired     int                 not null,
+    is_account_non_locked      int                 not null,
+    is_credentials_non_expired int                 not null,
+    is_enabled                 int                 not null,
     create_date                TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -32,7 +33,7 @@ CREATE TABLE orders
 (
     id           NUMERIC(22) AUTO_INCREMENT PRIMARY KEY,
     order_status VARCHAR(250) DEFAULT NULL,
-    customer_id  VARCHAR(250) NOT NULL,
+    customer_id  NUMERIC(22) NOT NULL,
     order_date   TIMESTAMP    DEFAULT CURRENT_TIMESTAMP
 );
 

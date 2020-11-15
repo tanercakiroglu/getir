@@ -23,12 +23,12 @@ public class OrderController implements IOrderController {
     }
 
     @Override
-    public ResponseEntity<ApiResponse> getOrdersByUsername(String username) {
-        return ResponseEntity.ok(new ApiResponse(orderService.getOrdersByUsername(username)));
+    public ResponseEntity<ApiResponse> getOrdersByUser(Long userId) {
+        return ResponseEntity.ok(new ApiResponse(orderService.getOrdersByUser(userId)));
     }
 
     @Override
-    public ResponseEntity<ApiResponse> getOrder(@Valid PostOrderRequest request, Authentication authentication) throws InsufficientQuantityException {
+    public ResponseEntity<ApiResponse> postOrder(@Valid PostOrderRequest request, Authentication authentication) throws InsufficientQuantityException {
         return ResponseEntity.ok(new ApiResponse(orderService.postOrder(request.getProductId(), request.getQuantity(), authentication.getName())));
     }
 }

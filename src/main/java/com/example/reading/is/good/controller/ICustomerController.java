@@ -1,5 +1,6 @@
 package com.example.reading.is.good.controller;
 
+import com.example.reading.is.good.exception.UserExistException;
 import com.example.reading.is.good.model.ApiResponse;
 import com.example.reading.is.good.request.CustomerSignUpRequest;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,7 @@ import javax.validation.Valid;
 public interface ICustomerController {
 
     @PostMapping("/sign-up")
-    ResponseEntity<ApiResponse> signUp(@Valid @RequestBody CustomerSignUpRequest request);
+    ResponseEntity<ApiResponse> signUp(@Valid @RequestBody CustomerSignUpRequest request) throws UserExistException;
 
 
 }

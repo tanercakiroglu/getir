@@ -2,6 +2,7 @@ package com.example.reading.is.good.aspect.exceptionhandler;
 
 import com.example.reading.is.good.aspect.loggable.Loggable;
 import com.example.reading.is.good.exception.InsufficientQuantityException;
+import com.example.reading.is.good.exception.UserExistException;
 import com.example.reading.is.good.model.ApiError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,14 +54,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         final List<String> details = new ArrayList<>();
-        ex.getBindingResult().getFieldErrors().forEach(fieldError -> details.add(String.format("%s %s",fieldError.getField(),fieldError.getDefaultMessage())));
+        ex.getBindingResult().getFieldErrors().forEach(fieldError -> details.add(fieldError.getDefaultMessage()));
         final ApiError errors = getApiError(details);
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(value = InsufficientQuantityException.class)
-    public ResponseEntity<ApiError> businessException(InsufficientQuantityException ex) {
-        LOGGER.error("InsufficientQuantityException ", ex);
+    @ExceptionHandler(value = {InsufficientQuantityException.class, UserExistException.class})
+    public ResponseEntity<ApiError> businessException(Exception ex) {
+        LOGGER.error(Exception.class.toString(), ex);
         final ApiError errors = getApiError(HttpStatus.CONFLICT, ex.getMessage());
         return new ResponseEntity<>(errors, HttpStatus.OK);
     }

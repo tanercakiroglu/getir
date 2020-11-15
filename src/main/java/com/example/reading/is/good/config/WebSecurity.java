@@ -3,6 +3,7 @@ package com.example.reading.is.good.config;
 import com.example.reading.is.good.service.impl.CustomerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,6 +18,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import static com.example.reading.is.good.config.SecurityUtil.*;
 
 @EnableWebSecurity
+@Profile(value = {"development","test","production"})
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;

@@ -12,9 +12,9 @@ import javax.validation.Valid;
 @RequestMapping("/api/order")
 public interface IOrderController {
 
-    @GetMapping("/{username}")
-    ResponseEntity<ApiResponse> getOrdersByUsername(@PathVariable String username);
+    @GetMapping("/{userId}")
+    ResponseEntity<ApiResponse> getOrdersByUser(@PathVariable Long userId);
 
     @PostMapping("/")
-    ResponseEntity<ApiResponse> getOrder(@Valid @RequestBody PostOrderRequest request, Authentication authentication) throws InsufficientQuantityException;
+    ResponseEntity<ApiResponse> postOrder(@Valid @RequestBody PostOrderRequest request, Authentication authentication) throws InsufficientQuantityException;
 }

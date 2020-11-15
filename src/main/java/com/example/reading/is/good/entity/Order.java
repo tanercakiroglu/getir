@@ -1,15 +1,21 @@
 package com.example.reading.is.good.entity;
 
 import com.example.reading.is.good.enumaration.OrderStatus;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity(name="orders")
+
 @Data
+@Builder
+@AllArgsConstructor
+@Entity(name="orders")
 public class Order implements Serializable {
 
     private static final long serialVersionUID = -4781925702178869690L;
@@ -23,7 +29,7 @@ public class Order implements Serializable {
     private OrderStatus orderStatus;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="customer_id", referencedColumnName = "username")
+    @JoinColumn(name="customer_id", referencedColumnName = "id")
     private Customer customer;
 
     @OneToMany(mappedBy = "order",cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)

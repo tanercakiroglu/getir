@@ -1,12 +1,18 @@
 package com.example.reading.is.good.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity(name="order_details")
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity(name="order_details")
 public class OrderDetail implements Serializable {
 
     private static final long serialVersionUID = 7552007440090911176L;

@@ -1,6 +1,7 @@
 package com.example.reading.is.good.service.impl;
 
 import com.example.reading.is.good.converter.CustomerEntityConverter;
+import com.example.reading.is.good.exception.UserExistException;
 import com.example.reading.is.good.repository.ICustomerRepository;
 import com.example.reading.is.good.request.CustomerSignUpRequest;
 import com.example.reading.is.good.service.ICustomerService;
@@ -28,14 +29,17 @@ public class CustomerService implements ICustomerService, UserDetailsService {
 
 
     @Override
-    public void signUp(CustomerSignUpRequest request) {
-      var customer = customerEntityConverter.convert(request);
-      customer.setPassword(bCryptPasswordEncoder.encode(customer.getPassword()));
-      customerRepository.save(customer);
+    public void signUp(CustomerSignUpRequest request) throws UserExistException {
+        if(customerRepository.findByUsername(request.getUsername()).isPresent()){
+            throw new UserExistException("User already have an account","0002");
+        }
+        var customer = customerEntityConverter.convert(request);
+        customer.setPassword(bCryptPasswordEncoder.encode(customer.getPassword()));
+        customerRepository.save(customer);
     }
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-     return  customerRepository.findByUsername(userName).orElseThrow(()->new UsernameNotFoundException("user not found"));
+        return customerRepository.findByUsername(userName).orElseThrow(() -> new UsernameNotFoundException("user not found"));
     }
 }

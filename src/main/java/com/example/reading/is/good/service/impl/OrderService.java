@@ -26,9 +26,9 @@ import java.util.stream.Collectors;
 public class OrderService implements IOrderService {
 
     private final IOrderRepository orderRepository;
-    private final OrderEntityToDtoConverter orderEntityToDtoConverter;
     private final IProductRepository productRepository;
     private final ICustomerRepository customerRepository;
+    private final OrderEntityToDtoConverter orderEntityToDtoConverter;
 
     public OrderService(IOrderRepository orderRepository, OrderEntityToDtoConverter orderEntityToDtoConverter, IProductRepository productRepository, ICustomerRepository customerRepository, IOrderDetailRepository orderDetailRepository) {
         this.orderRepository = orderRepository;
@@ -39,8 +39,8 @@ public class OrderService implements IOrderService {
 
     @Override
     @Transactional
-    public List<OrderDto> getOrdersByUsername(String username) {
-        var orderList=orderRepository.findByCustomer(username).orElseThrow(()-> new EntityNotFoundException("order not found"));
+    public List<OrderDto> getOrdersByUser(Long userId) {
+        var orderList=orderRepository.findByCustomer(userId).orElseThrow(()-> new EntityNotFoundException("order not found"));
         return orderList.stream().map(orderEntityToDtoConverter::convertWithoutDetails).collect(Collectors.toList());
     }
 
@@ -60,13 +60,15 @@ public class OrderService implements IOrderService {
 
     @NotNull
     private Order prepareEntity(Long quantity, Product product, Customer customer) {
-        final var order = new Order();
-        final var orderDetail= new OrderDetail();
-        orderDetail.setQuantity(quantity);
-        orderDetail.setOrder(order);
-        orderDetail.setProduct(product);
-        order.setOrderStatus(OrderStatus.WAITING_FOR_PAYMENT);
-        order.setCustomer(customer);
+        var order= Order.builder()
+                .orderStatus(OrderStatus.WAITING_FOR_PAYMENT)
+                .customer(customer)
+                .build();
+        var orderDetail=OrderDetail.builder()
+                .quantity(quantity)
+                .product(product)
+                .order(order)
+                .build();
         order.setOrderDetails(Collections.singletonList(orderDetail));
         return order;
     }

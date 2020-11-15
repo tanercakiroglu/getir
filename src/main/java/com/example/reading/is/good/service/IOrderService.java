@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IOrderService {
 
-    List<OrderDto> getOrdersByUsername(String username);
+    List<OrderDto> getOrdersByUser(Long userId);
 
     OrderDto postOrder(Long productId, Long quantity, String username) throws InsufficientQuantityException;
 }

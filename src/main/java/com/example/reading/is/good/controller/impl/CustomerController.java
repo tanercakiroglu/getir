@@ -2,6 +2,7 @@ package com.example.reading.is.good.controller.impl;
 
 import com.example.reading.is.good.aspect.loggable.Loggable;
 import com.example.reading.is.good.controller.ICustomerController;
+import com.example.reading.is.good.exception.UserExistException;
 import com.example.reading.is.good.model.ApiResponse;
 import com.example.reading.is.good.request.CustomerSignUpRequest;
 import com.example.reading.is.good.service.ICustomerService;
@@ -21,7 +22,7 @@ public class CustomerController implements ICustomerController {
     }
 
     @Override
-    public ResponseEntity<ApiResponse> signUp(@Valid CustomerSignUpRequest request) {
+    public ResponseEntity<ApiResponse> signUp(@Valid CustomerSignUpRequest request) throws UserExistException {
         customerService.signUp(request);
         return ResponseEntity.ok(new ApiResponse());
     }
