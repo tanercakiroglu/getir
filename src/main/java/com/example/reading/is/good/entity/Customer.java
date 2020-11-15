@@ -1,5 +1,6 @@
 package com.example.reading.is.good.entity;
 
+import com.example.reading.is.good.config.AuditEntityListener;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,10 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -19,6 +17,7 @@ import java.util.Collection;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(AuditEntityListener.class)
 @Entity(name="customers")
 public class Customer implements Serializable, UserDetails {
 

@@ -1,5 +1,6 @@
 package com.example.reading.is.good.entity;
 
+import com.example.reading.is.good.config.AuditEntityListener;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +15,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(AuditEntityListener.class)
 @Entity(name="products")
 public class Product implements Serializable {
 

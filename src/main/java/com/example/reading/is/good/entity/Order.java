@@ -1,5 +1,6 @@
 package com.example.reading.is.good.entity;
 
+import com.example.reading.is.good.config.AuditEntityListener;
 import com.example.reading.is.good.enumaration.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,10 +12,10 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
-
 @Data
 @Builder
 @AllArgsConstructor
+@EntityListeners(AuditEntityListener.class)
 @Entity(name="orders")
 public class Order implements Serializable {
 
@@ -39,3 +40,4 @@ public class Order implements Serializable {
         this.setOrderDate(LocalDateTime.now());
     }
 }
+

@@ -1,5 +1,6 @@
 package com.example.reading.is.good.entity;
 
+import com.example.reading.is.good.config.AuditEntityListener;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +13,7 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(AuditEntityListener.class)
 @Entity(name="order_details")
 public class OrderDetail implements Serializable {
 
@@ -31,4 +33,11 @@ public class OrderDetail implements Serializable {
     @JoinColumn(name="product_id", referencedColumnName = "id")
     private Product product;
 
+    @Override
+    public String toString() {
+        return "OrderDetail{" +
+                "id=" + id +
+                ", quantity=" + quantity +
+                '}';
+    }
 }
