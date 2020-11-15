@@ -17,20 +17,25 @@ public class AuditEntityListener {
 
     @PostUpdate
     public void handleUpdate(Object entity) {
-        var username=  SecurityContextHolder.getContext().getAuthentication().getName();
-        LOGGER.info(String.format("%s entity is updated by %s at time %s",entity.toString(),username, LocalDateTime.now()));
+        var username = getUserName();
+        LOGGER.info(String.format("%s entity is updated by %s at time %s", entity.toString(), username, LocalDateTime.now()));
     }
 
     @PostRemove
     public void handleRemove(Object entity) {
-        var username=  SecurityContextHolder.getContext().getAuthentication().getName();
-        LOGGER.info(String.format("%s entity is removed by %s at time %s",entity.toString(),username, LocalDateTime.now()));
+        var username = getUserName();
+        LOGGER.info(String.format("%s entity is removed by %s at time %s", entity.toString(), username, LocalDateTime.now()));
     }
 
     @PostPersist
     public void handlePersist(Object entity) {
-        var username=  SecurityContextHolder.getContext().getAuthentication().getName();
-        LOGGER.info(String.format("%s entity is persist by %s at time %s",entity,username, LocalDateTime.now()));
+        var username = getUserName();
+        LOGGER.info(String.format("%s entity is persist by %s at time %s", entity, username, LocalDateTime.now()));
+    }
+
+    private String getUserName() {
+        return SecurityContextHolder.getContext().getAuthentication() == null ?
+                "anonymous" : SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
 }
